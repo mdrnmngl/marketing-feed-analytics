@@ -496,7 +496,8 @@ function generateYearView(year) {
     html += '</div>';
     return html;
 }
-}
+
+// Generate activity data for any month
 
 // Generate activity data for any month
 function generateMonthlyActivityData(year, month) {
