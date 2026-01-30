@@ -300,14 +300,7 @@ function createTrafficSourceChart() {
         }
     });
 }
-                            return `${label}: ${value.toLocaleString()} (${percentage}%)`;
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
+
 
 // Traffic Trend Over Time
 function createTrafficTrendChart() {
