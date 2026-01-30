@@ -2,7 +2,7 @@
 // Main Application Logic
 
 let currentPlatformFilter = 'all';
-let currentDateRange = 30;
+let currentDateRange = 30; // Default to 30 days
 let mapMarkers = [];
 
 document.addEventListener('DOMContentLoaded', function() {

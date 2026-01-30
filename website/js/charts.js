@@ -51,7 +51,7 @@ function createRevenueTrafficChart() {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             interaction: {
                 mode: 'index',
                 intersect: false
@@ -142,7 +142,7 @@ function createPlatformChart() {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             indexAxis: 'y',
             plugins: {
                 legend: {
@@ -199,7 +199,7 @@ function createActivityChart() {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
                 tooltip: {
@@ -274,7 +274,7 @@ function createTrafficSourceChart() {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             indexAxis: 'y',
             plugins: {
                 legend: {
@@ -351,7 +351,7 @@ function createTrafficTrendChart() {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
                 tooltip: {
