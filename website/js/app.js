@@ -267,38 +267,81 @@ function populateSocialMediaTable() {
     }
 }
 
-// Enhanced Heat Map with Better Visualization
+// Enhanced Heat Map with Calendar Format
 function populateHeatMap() {
     const container = document.getElementById('heatmapContainer');
     if (!container) return;
     
-    container.innerHTML = '';
+    // Generate calendar for current month (January 2026)
+    const currentDate = new Date('2026-01-29');
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth(); // 0-indexed
     
-    const { weeklyData } = analyticsData;
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                        'July', 'August', 'September', 'October', 'November', 'December'];
     
-    // Create simple heat map grid
-    const heatmapHtml = `
-        <div class="heatmap-grid">
-            <div class="heatmap-cell heatmap-header"></div>
-            <div class="heatmap-cell heatmap-header">Mon</div>
-            <div class="heatmap-cell heatmap-header">Tue</div>
-            <div class="heatmap-cell heatmap-header">Wed</div>
-            <div class="heatmap-cell heatmap-header">Thu</div>
-            <div class="heatmap-cell heatmap-header">Fri</div>
-            <div class="heatmap-cell heatmap-header">Sat</div>
-            <div class="heatmap-cell heatmap-header">Sun</div>
-            
-            ${weeklyData.map((week, weekIdx) => `
-                <div class="heatmap-cell heatmap-week-label">Week ${weekIdx + 1}</div>
-                ${week.days.map((day, dayIdx) => {
-                    const intensity = getIntensityLevel(day.posts, day.campaigns, day.revenue);
-                    return `<div class="heatmap-cell heatmap-day intensity-${intensity}" 
-                             title="${day.date}: ${day.posts} posts, ${day.campaigns} campaigns, $${day.revenue.toLocaleString()}">
-                        </div>`;
-                }).join('')}
-            `).join('')}
+    // Get first day of month and number of days
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay(); // 0 = Sunday
+    
+    // Create activity data map from weeklyData
+    const activityMap = {};
+    analyticsData.weeklyData.forEach(week => {
+        week.days.forEach(day => {
+            activityMap[day.date] = {
+                posts: day.posts,
+                campaigns: day.campaigns,
+                revenue: day.revenue
+            };
+        });
+    });
+    
+    // Build calendar HTML
+    let calendarHtml = `
+        <div class="heatmap-header-bar">
+            <h3 style="margin: 0; font-family: Arial, sans-serif; font-size: 1.25rem;">${monthNames[month]} ${year}</h3>
+            <select id="monthSelector" class="month-selector">
+                ${monthNames.map((m, i) => `<option value="${i}" ${i === month ? 'selected' : ''}>${m} ${year}</option>`).join('')}
+            </select>
         </div>
+        <div class="calendar-grid">
+            <div class="calendar-day-header">Sun</div>
+            <div class="calendar-day-header">Mon</div>
+            <div class="calendar-day-header">Tue</div>
+            <div class="calendar-day-header">Wed</div>
+            <div class="calendar-day-header">Thu</div>
+            <div class="calendar-day-header">Fri</div>
+            <div class="calendar-day-header">Sat</div>
+    `;
+    
+    // Add empty cells for days before month starts
+    for (let i = 0; i < startingDayOfWeek; i++) {
+        calendarHtml += '<div class="calendar-day empty"></div>';
+    }
+    
+    // Add days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const activity = activityMap[dateStr] || { posts: 0, campaigns: 0, revenue: 0 };
+        const intensity = getIntensityLevel(activity.posts, activity.campaigns, activity.revenue);
         
+        calendarHtml += `
+            <div class="calendar-day intensity-${intensity}" 
+                 data-date="${dateStr}">
+                <span class="day-number">${day}</span>
+                <div class="day-tooltip">
+                    <strong>${monthNames[month]} ${day}</strong><br>
+                    ${activity.posts} posts, ${activity.campaigns} campaigns<br>
+                    $${activity.revenue.toLocaleString()} revenue
+                </div>
+            </div>
+        `;
+    }
+    
+    calendarHtml += `
+        </div>
         <div class="heatmap-legend">
             <div class="legend-item">
                 <div class="legend-color intensity-high"></div>
@@ -319,7 +362,7 @@ function populateHeatMap() {
         </div>
     `;
     
-    container.innerHTML = heatmapHtml;
+    container.innerHTML = calendarHtml;
 }
 
 function getIntensityLevel(posts, campaigns, revenue) {
@@ -452,8 +495,8 @@ function populateShopifyTab() {
     
     tableBody.innerHTML = '';
     
-    // Show last 30 days
-    const recentData = timeline.slice(-30);
+    // Show last 30 days in descending order (newest first)
+    const recentData = timeline.slice(-30).reverse();
     
     recentData.forEach(day => {
         const row = document.createElement('tr');
