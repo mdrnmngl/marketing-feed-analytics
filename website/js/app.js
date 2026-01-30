@@ -300,6 +300,7 @@ function populateHeatMap(year = currentHeatMapYear, month = currentHeatMapMonth)
                     ${monthNames.map((m, i) => `<option value="${i}" ${i === month ? 'selected' : ''}>${m}</option>`).join('')}
                 </select>
                 <select id="yearSelector" class="month-selector">
+                    <option value="2024" ${year === 2024 ? 'selected' : ''}>2024</option>
                     <option value="2025" ${year === 2025 ? 'selected' : ''}>2025</option>
                     <option value="2026" ${year === 2026 ? 'selected' : ''}>2026</option>
                 </select>
@@ -409,8 +410,8 @@ function getIntensityLevel(posts, campaigns, revenue) {
     const totalEvents = posts + campaigns;
     
     if (totalEvents === 0) return 'none';
-    if (totalEvents >= 3 && revenue > 5000) return 'high';
-    if (totalEvents >= 1) return 'medium';
+    if (totalEvents >= 3 || revenue > 5000) return 'high';
+    if (totalEvents >= 2 || revenue > 2500) return 'medium';
     return 'low';
 }
 
