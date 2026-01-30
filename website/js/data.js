@@ -3,7 +3,7 @@
 
 const analyticsData = {
     dateRange: {
-        start: "2024-03-01",
+        start: "2024-03-08",
         end: "2026-01-29",
         lastUpdated: "2026-01-29T12:00:00Z"
     },
@@ -165,10 +165,15 @@ function generateTimelineData() {
         
         const orders = Math.floor(revenue / 35); // ~$35 AOV
         const visitors = Math.floor(sessions * 0.85);
+        const shopifySessions = Math.floor(sessions * 0.6); // 60% from Shopify Analytics
         
         // Occasional marketing events
         const hasPost = Math.random() > 0.85;
         const hasCampaign = Math.random() > 0.95;
+        
+        // Sample traffic sources and countries
+        const topSources = ['Google, Direct, Instagram', 'Instagram, Facebook, Direct', 'Direct, Google, TikTok'][Math.floor(Math.random() * 3)];
+        const topCountries = ['United States, India, Canada', 'India, UAE, United States', 'United States, UK, Australia'][Math.floor(Math.random() * 3)];
         
         data.push({
             date: date.toISOString().split('T')[0],
@@ -176,7 +181,10 @@ function generateTimelineData() {
             orders: orders,
             sessions: sessions,
             visitors: visitors,
-            pageViews: sessions * 3.2,
+            pageViews: Math.round(sessions * 3.2),
+            shopifySessions: shopifySessions,
+            topSources: topSources,
+            topCountries: topCountries,
             posts: hasPost ? 1 : 0,
             campaigns: hasCampaign ? 1 : 0,
             hasEvent: hasPost || hasCampaign
