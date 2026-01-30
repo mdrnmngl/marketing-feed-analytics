@@ -122,10 +122,20 @@ function activateTab(tabId) {
 // Date Range Filters
 function setupDateFilters() {
     const dateSelect = document.getElementById('dateRangeSelect');
+    const customRangeDiv = document.getElementById('customDateRange');
+    const applyBtn = document.getElementById('applyCustomRange');
+    
     if (!dateSelect) return;
     
     dateSelect.addEventListener('change', () => {
         const range = dateSelect.value;
+        
+        if (range === 'custom') {
+            if (customRangeDiv) customRangeDiv.style.display = 'flex';
+            return;
+        }
+        
+        if (customRangeDiv) customRangeDiv.style.display = 'none';
         
         // Convert range value to days
         if (range === 'all') {
@@ -144,6 +154,28 @@ function setupDateFilters() {
         
         populateRawDataTable();
     });
+    
+    // Custom date range apply button
+    if (applyBtn) {
+        applyBtn.addEventListener('click', () => {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            if (startDate && endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const diffTime = Math.abs(end - start);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                currentDateRange = diffDays;
+                populateRawDataTable();
+                
+                if (customRangeDiv) customRangeDiv.style.display = 'none';
+            } else {
+                alert('Please select both start and end dates');
+            }
+        });
+    }
 }
 
 // Populate Summary Statistics
@@ -211,7 +243,7 @@ function populateSocialMediaTable() {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${post.date}</td>
-            <td><strong>${post.platform}</strong></td>
+            <td><span class="platform-badge ${post.platform.toLowerCase()}">${post.platform}</span></td>
             <td>${post.influencer}</td>
             <td><a href="${post.postUrl}" target="_blank" style="color: var(--brand-mocha);">View Post</a></td>
             <td>${post.views.toLocaleString()}</td>

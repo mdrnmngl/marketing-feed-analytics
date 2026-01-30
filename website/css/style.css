@@ -1,7 +1,7 @@
 /* Modern Mangal - Marketing Analytics Dashboard */
 /* Brand Identity Implementation */
 
-@import url('https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,300;0,400;0,700;1,400&display=swap');
 
 * {
     margin: 0;
@@ -64,6 +64,7 @@
 body {
     font-family: 'Cardo', serif;
     font-size: 1rem;
+    font-weight: 300;
     line-height: 1.6;
     color: var(--text-primary);
     background-color: var(--bg-primary);
@@ -75,6 +76,16 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     color: var(--brand-black-blue);
     line-height: 1.3;
+}
+
+button, input, select, textarea {
+    font-family: 'Cardo', serif;
+    font-weight: 300;
+}
+
+table {
+    font-family: 'Cardo', serif;
+    font-weight: 300;
 }
 
 .container {
@@ -114,13 +125,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .subtitle {
-    font-family: Arial, sans-serif;
+    font-family: 'Cardo', serif;
     font-size: 0.875rem;
     margin: 0;
     color: var(--brand-rose);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .date-range {
@@ -154,12 +165,17 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
 }
 
+.tab-wrapper:hover .dropdown-menu {
+    display: block;
+}
+
 .tab-btn {
     background: none;
     border: none;
     padding: 1rem 1.5rem;
-    font-family: Arial, sans-serif;
+    font-family: 'Cardo', serif;
     font-size: 0.875rem;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--brand-mocha);
@@ -210,8 +226,9 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
     width: 100%;
     padding: 0.75rem 1.5rem;
-    font-family: Arial, sans-serif;
+    font-family: 'Cardo', serif;
     font-size: 0.875rem;
+    font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--brand-mocha);
@@ -340,9 +357,40 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
 }
 
+/* Charts Row Grid */
+.charts-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
 .chart-container {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.chart-container canvas {
     position: relative;
-    height: 350px;
+    height: 300px !important;
+    width: 100% !important;
+}
+
+.chart-container.full-width {
+    margin-bottom: 1.5rem;
+}
+
+.chart-title {
+    font-family: 'Cardo', serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin-bottom: var(--spacing-md);
+    color: #111827;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid #E5E7EB;
 }
 
 /* Tables */
@@ -394,6 +442,43 @@ tr:hover {
 
 tr.highlight {
     background-color: #FEF3C7;
+}
+
+/* Platform Badges */
+.platform-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.platform-badge.instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #fff;
+}
+
+.platform-badge.tiktok {
+    background: #000000;
+    color: #25F4EE;
+    border: 1px solid #25F4EE;
+}
+
+.platform-badge.pinterest {
+    background: #E60023;
+    color: #fff;
+}
+
+.platform-badge.facebook {
+    background: #1877F2;
+    color: #fff;
+}
+
+.platform-badge.all {
+    background: var(--brand-mocha);
+    color: var(--brand-white-chalk);
 }
 
 /* Heat Map */
@@ -556,6 +641,8 @@ tr.highlight {
 .date-range-selector {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .date-range-select {
@@ -584,6 +671,49 @@ tr.highlight {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+.custom-date-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    background: #F9FAFB;
+    border-radius: 4px;
+    border: 1px solid #E5E7EB;
+}
+
+.date-input {
+    padding: 0.5rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-family: 'Cardo', serif;
+    color: #374151;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.apply-date-btn {
+    padding: 0.5rem 1rem;
+    background: var(--brand-black-blue);
+    color: var(--brand-white-chalk);
+    border: none;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-family: 'Cardo', serif;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.apply-date-btn:hover {
+    background: var(--brand-rosewood);
+}
+
 /* Filters (deprecated but keeping for backwards compatibility) */
 .filters-container {
     background: #FFFFFF;
@@ -601,12 +731,12 @@ tr.highlight {
 }
 
 .filter-label {
-    font-family: Arial, sans-serif;
+    font-family: 'Cardo', serif;
     font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-secondary);
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .filter-buttons {

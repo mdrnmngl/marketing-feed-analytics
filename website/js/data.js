@@ -108,16 +108,56 @@ const analyticsData = {
         }
     ],
     
-    // Weekly heat map data
+    // Weekly heat map data - 8 weeks with daily breakdown
     weeklyData: [
-        { year: 2026, week: 4, revenue: 12450, sessions: 4200, posts: 3, campaigns: 1, activity: "high" },
-        { year: 2026, week: 3, revenue: 10200, sessions: 3500, posts: 2, campaigns: 0, activity: "medium" },
-        { year: 2026, week: 2, revenue: 8900, sessions: 2800, posts: 1, campaigns: 1, activity: "medium" },
-        { year: 2026, week: 1, revenue: 7200, sessions: 2200, posts: 0, campaigns: 0, activity: "low" },
-        { year: 2025, week: 52, revenue: 15600, sessions: 5100, posts: 4, campaigns: 2, activity: "high" },
-        { year: 2025, week: 51, revenue: 13800, sessions: 4600, posts: 3, campaigns: 1, activity: "high" },
-        { year: 2025, week: 50, revenue: 9400, sessions: 3100, posts: 1, campaigns: 0, activity: "medium" },
-        { year: 2025, week: 49, revenue: 6800, sessions: 2000, posts: 0, campaigns: 1, activity: "medium" }
+        {
+            week: 1,
+            days: [
+                { date: '2026-01-06', posts: 1, campaigns: 0, revenue: 1200 },
+                { date: '2026-01-07', posts: 0, campaigns: 1, revenue: 1800 },
+                { date: '2026-01-08', posts: 1, campaigns: 0, revenue: 2100 },
+                { date: '2026-01-09', posts: 0, campaigns: 0, revenue: 800 },
+                { date: '2026-01-10', posts: 2, campaigns: 1, revenue: 3500 },
+                { date: '2026-01-11', posts: 0, campaigns: 0, revenue: 600 },
+                { date: '2026-01-12', posts: 1, campaigns: 0, revenue: 1400 }
+            ]
+        },
+        {
+            week: 2,
+            days: [
+                { date: '2026-01-13', posts: 0, campaigns: 1, revenue: 2200 },
+                { date: '2026-01-14', posts: 1, campaigns: 0, revenue: 1900 },
+                { date: '2026-01-15', posts: 2, campaigns: 0, revenue: 3100 },
+                { date: '2026-01-16', posts: 0, campaigns: 0, revenue: 700 },
+                { date: '2026-01-17', posts: 1, campaigns: 1, revenue: 4200 },
+                { date: '2026-01-18', posts: 0, campaigns: 0, revenue: 900 },
+                { date: '2026-01-19', posts: 1, campaigns: 0, revenue: 1600 }
+            ]
+        },
+        {
+            week: 3,
+            days: [
+                { date: '2026-01-20', posts: 1, campaigns: 0, revenue: 2400 },
+                { date: '2026-01-21', posts: 0, campaigns: 1, revenue: 2800 },
+                { date: '2026-01-22', posts: 2, campaigns: 0, revenue: 4100 },
+                { date: '2026-01-23', posts: 0, campaigns: 0, revenue: 1100 },
+                { date: '2026-01-24', posts: 1, campaigns: 1, revenue: 5200 },
+                { date: '2026-01-25', posts: 0, campaigns: 0, revenue: 800 },
+                { date: '2026-01-26', posts: 1, campaigns: 0, revenue: 1800 }
+            ]
+        },
+        {
+            week: 4,
+            days: [
+                { date: '2026-01-27', posts: 2, campaigns: 1, revenue: 6200 },
+                { date: '2026-01-28', posts: 1, campaigns: 0, revenue: 3400 },
+                { date: '2026-01-29', posts: 0, campaigns: 1, revenue: 2800 },
+                { date: '2026-01-30', posts: 1, campaigns: 0, revenue: 2100 },
+                { date: '2026-01-31', posts: 0, campaigns: 0, revenue: 900 },
+                { date: '2026-02-01', posts: 1, campaigns: 1, revenue: 4800 },
+                { date: '2026-02-02', posts: 0, campaigns: 0, revenue: 1200 }
+            ]
+        }
     ],
     
     // Geographic data

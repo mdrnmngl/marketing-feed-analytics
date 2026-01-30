@@ -257,7 +257,14 @@
                             <option value="lq">Last quarter</option>
                             <option value="ly">Last year</option>
                             <option value="all">All time</option>
+                            <option value="custom">Custom range...</option>
                         </select>
+                        <div id="customDateRange" class="custom-date-range" style="display: none;">
+                            <input type="date" id="startDate" class="date-input">
+                            <span style="margin: 0 0.5rem; color: #6B7280;">to</span>
+                            <input type="date" id="endDate" class="date-input">
+                            <button id="applyCustomRange" class="apply-date-btn">Apply</button>
+                        </div>
                     </div>
                 </div>
                 
