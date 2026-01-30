@@ -122,14 +122,14 @@ const analyticsData = {
     
     // Geographic data
     countries: [
-        { name: "India", code: "IN", sessions: 45200, revenue: 185000, lat: 20.5937, lng: 78.9629, flag: "🇮🇳" },
-        { name: "United States", code: "US", sessions: 28500, revenue: 142000, lat: 37.0902, lng: -95.7129, flag: "🇺🇸" },
-        { name: "United Kingdom", code: "GB", sessions: 15800, revenue: 78000, lat: 55.3781, lng: -3.4360, flag: "🇬🇧" },
-        { name: "UAE", code: "AE", sessions: 12400, revenue: 58000, lat: 23.4241, lng: 53.8478, flag: "🇦🇪" },
-        { name: "Canada", code: "CA", sessions: 8900, revenue: 38000, lat: 56.1304, lng: -106.3468, flag: "🇨🇦" },
-        { name: "Australia", code: "AU", sessions: 6200, revenue: 25000, lat: -25.2744, lng: 133.7751, flag: "🇦🇺" },
-        { name: "Singapore", code: "SG", sessions: 4800, revenue: 22000, lat: 1.3521, lng: 103.8198, flag: "🇸🇬" },
-        { name: "Germany", code: "DE", sessions: 3500, revenue: 15000, lat: 51.1657, lng: 10.4515, flag: "🇩🇪" }
+        { name: "India", code: "IN", sessions: 45200, revenue: 185000, lat: 20.5937, lng: 78.9629 },
+        { name: "United States", code: "US", sessions: 28500, revenue: 142000, lat: 37.0902, lng: -95.7129 },
+        { name: "United Kingdom", code: "GB", sessions: 15800, revenue: 78000, lat: 55.3781, lng: -3.4360 },
+        { name: "UAE", code: "AE", sessions: 12400, revenue: 58000, lat: 23.4241, lng: 53.8478 },
+        { name: "Canada", code: "CA", sessions: 8900, revenue: 38000, lat: 56.1304, lng: -106.3468 },
+        { name: "Australia", code: "AU", sessions: 6200, revenue: 25000, lat: -25.2744, lng: 133.7751 },
+        { name: "Singapore", code: "SG", sessions: 4800, revenue: 22000, lat: 1.3521, lng: 103.8198 },
+        { name: "Germany", code: "DE", sessions: 3500, revenue: 15000, lat: 51.1657, lng: 10.4515 }
     ],
     
     // Traffic sources

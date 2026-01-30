@@ -126,17 +126,28 @@ function activateTab(tabId) {
 
 // Date Range Filters
 function setupDateFilters() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    const dateSelect = document.getElementById('dateRangeSelect');
+    if (!dateSelect) return;
     
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            const range = btn.getAttribute('data-range');
-            currentDateRange = range === 'all' ? 99999 : parseInt(range);
-            populateRawDataTable();
-        });
+    dateSelect.addEventListener('change', () => {
+        const range = dateSelect.value;
+        
+        // Convert range value to days
+        if (range === 'all') {
+            currentDateRange = 99999;
+        } else if (range === 'wtd' || range === 'lw') {
+            currentDateRange = 7;
+        } else if (range === 'mtd' || range === 'lm') {
+            currentDateRange = 30;
+        } else if (range === 'qtd' || range === 'lq') {
+            currentDateRange = 90;
+        } else if (range === 'ytd' || range === 'ly') {
+            currentDateRange = 365;
+        } else {
+            currentDateRange = parseInt(range);
+        }
+        
+        populateRawDataTable();
     });
 }
 

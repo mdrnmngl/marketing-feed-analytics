@@ -18,8 +18,8 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <h1 class="logo">Modern Mangal</h1>
-                <p class="subtitle">Marketing Analytics Dashboard</p>
+                <h1 class="logo">MODERN MANGAL</h1>
+                <p class="subtitle">MARKETING ANALYTICS DASHBOARD</p>
             </div>
             <div class="date-range" id="dateRange">Loading...</div>
         </div>
@@ -71,7 +71,6 @@
                 <!-- Summary Cards -->
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: #E3F2FD;">💰</div>
                         <div class="stat-content">
                             <p class="stat-label">Total Revenue</p>
                             <h3 class="stat-value" id="totalRevenue">$0</h3>
@@ -79,7 +78,6 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: #F3E5F5;">🛒</div>
                         <div class="stat-content">
                             <p class="stat-label">Total Orders</p>
                             <h3 class="stat-value" id="totalOrders">0</h3>
@@ -87,7 +85,6 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: #E8F5E9;">👥</div>
                         <div class="stat-content">
                             <p class="stat-label">Total Visitors</p>
                             <h3 class="stat-value" id="totalVisitors">0</h3>
@@ -95,7 +92,6 @@
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon" style="background: #FFF3E0;">📸</div>
                         <div class="stat-content">
                             <p class="stat-label">Social Posts</p>
                             <h3 class="stat-value" id="totalPosts">0</h3>
@@ -238,24 +234,33 @@
 
             <!-- Raw Data Tab -->
             <section id="data" class="tab-content">
-                <h2 class="section-title">Raw Data</h2>
-                <p class="section-description">Detailed daily metrics with custom date range selection</p>
-                
-                <!-- Filters -->
-                <div class="filters-container">
-                    <div class="filter-group">
-                        <span class="filter-label">Date Range:</span>
-                        <div class="filter-buttons">
-                            <button class="filter-btn active" data-range="30">1 Month</button>
-                            <button class="filter-btn" data-range="90">3 Months</button>
-                            <button class="filter-btn" data-range="180">6 Months</button>
-                            <button class="filter-btn" data-range="365">12 Months</button>
-                            <button class="filter-btn" data-range="730">24 Months</button>
-                            <button class="filter-btn" data-range="all">All Time</button>
-                        </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div>
+                        <h2 class="section-title" style="margin-bottom: 0.5rem;">Raw Data</h2>
+                        <p class="section-description">Detailed daily metrics with custom date range selection</p>
+                    </div>
+                    <div class="date-range-selector">
+                        <label for="dateRangeSelect" style="font-size: 0.875rem; color: #6B7280; margin-right: 0.5rem;">Date Range:</label>
+                        <select id="dateRangeSelect" class="date-range-select">
+                            <option value="1">Today</option>
+                            <option value="2">Yesterday</option>
+                            <option value="7">Last 7 days</option>
+                            <option value="30" selected>Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                            <option value="365">Last 365 days</option>
+                            <option value="wtd">Week to date</option>
+                            <option value="mtd">Month to date</option>
+                            <option value="qtd">Quarter to date</option>
+                            <option value="ytd">Year to date</option>
+                            <option value="lw">Last week</option>
+                            <option value="lm">Last month</option>
+                            <option value="lq">Last quarter</option>
+                            <option value="ly">Last year</option>
+                            <option value="all">All time</option>
+                        </select>
                     </div>
                 </div>
-
+                
                 <div class="table-container">
                     <table class="data-table" id="rawDataTable">
                         <thead>
