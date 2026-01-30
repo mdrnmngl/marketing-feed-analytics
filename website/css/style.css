@@ -777,11 +777,12 @@ tr.highlight {
 }
 
 .mini-day {
-    aspect-ratio: 1;
     border-radius: 3px;
     cursor: pointer;
     transition: transform 0.15s ease;
-    min-height: 20px;
+    min-height: 24px;
+    height: 28px;
+    position: relative;
 }
 
 .mini-day:not(.empty):hover {
@@ -791,6 +792,42 @@ tr.highlight {
 
 .mini-day.empty {
     background: transparent;
+}
+
+.mini-day-tooltip,
+.tiny-day-tooltip {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 6px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    pointer-events: none;
+}
+
+.mini-day-tooltip::before,
+.tiny-day-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.95);
+}
+
+.mini-day:hover .mini-day-tooltip,
+.tiny-day:hover .tiny-day-tooltip {
+    display: block;
 }
 
 /* Year View */
@@ -823,12 +860,12 @@ tr.highlight {
 }
 
 .tiny-day {
-    aspect-ratio: 1;
     border-radius: 2px;
     cursor: pointer;
     transition: transform 0.15s ease;
-    min-height: 12px;
-    max-height: 18px;
+    min-height: 14px;
+    height: 18px;
+    position: relative;
 }
 
 .tiny-day:not(.empty):hover {

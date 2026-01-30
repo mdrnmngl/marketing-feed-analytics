@@ -455,7 +455,15 @@ function generateQuarterView(year, month) {
             const activity = activityMap[dateStr] || { posts: 0, campaigns: 0, revenue: 0 };
             const intensity = getIntensityLevel(activity.posts, activity.campaigns, activity.revenue);
             
-            html += `<div class="mini-day intensity-${intensity}" title="${monthNames[m]} ${day}: ${activity.posts} posts, ${activity.campaigns} campaigns, $${activity.revenue.toLocaleString()}"></div>`;
+            html += `
+                <div class="mini-day intensity-${intensity}">
+                    <div class="mini-day-tooltip">
+                        <strong>${monthNames[m]} ${day}, ${year}</strong><br>
+                        ${activity.posts} posts · ${activity.campaigns} campaigns<br>
+                        Revenue: $${activity.revenue.toLocaleString()}
+                    </div>
+                </div>
+            `;
         }
         
         html += '</div></div>';
@@ -487,7 +495,15 @@ function generateYearView(year) {
             const activity = activityMap[dateStr] || { posts: 0, campaigns: 0, revenue: 0 };
             const intensity = getIntensityLevel(activity.posts, activity.campaigns, activity.revenue);
             
-            html += `<div class="tiny-day intensity-${intensity}" title="${monthNames[m]} ${day}: ${activity.posts} posts, ${activity.campaigns} campaigns, $${activity.revenue.toLocaleString()}"></div>`;
+            html += `
+                <div class="tiny-day intensity-${intensity}">
+                    <div class="tiny-day-tooltip">
+                        <strong>${monthNames[m]} ${day}</strong><br>
+                        ${activity.posts} posts · ${activity.campaigns} campaigns<br>
+                        $${activity.revenue.toLocaleString()}
+                    </div>
+                </div>
+            `;
         }
         
         html += '</div></div>';
