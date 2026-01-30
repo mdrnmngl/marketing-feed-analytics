@@ -31,11 +31,6 @@ function setupTabSwitching() {
     
     tabBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
-            // Don't switch tabs if clicking dropdown parent
-            if (btn.classList.contains('has-dropdown')) {
-                return;
-            }
-            
             // Remove active class from all
             tabBtns.forEach(b => b.classList.remove('active'));
             tabContents.forEach(c => c.classList.remove('active'));
