@@ -110,6 +110,7 @@ table {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .brand-name {
@@ -371,12 +372,14 @@ table {
     padding: var(--spacing-md);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     position: relative;
-    height: 400px;
+    height: 420px;
+    overflow: hidden;
 }
 
 .chart-container canvas {
     display: block !important;
-    max-height: 350px !important;
+    max-height: 340px !important;
+    max-width: 100% !important;
 }
 
 .chart-container.full-width {
@@ -518,31 +521,33 @@ tr.highlight {
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
+    gap: 4px;
     margin-bottom: 1.5rem;
+    max-width: 100%;
 }
 
 .calendar-day-header {
     font-family: Arial, sans-serif;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     color: #6B7280;
-    padding: 0.5rem;
+    padding: 0.25rem;
     text-align: center;
 }
 
 .calendar-day {
     aspect-ratio: 1;
-    border-radius: 8px;
-    padding: 0.5rem;
+    border-radius: 6px;
+    padding: 0.25rem;
     position: relative;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    min-height: 60px;
+    min-height: 40px;
+    max-height: 60px;
 }
 
 .calendar-day.empty {
@@ -565,28 +570,29 @@ tr.highlight {
 .day-tooltip {
     display: none;
     position: absolute;
-    top: 100%;
+    bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     color: white;
     padding: 0.75rem;
     border-radius: 6px;
     font-size: 0.75rem;
     white-space: nowrap;
     z-index: 1000;
-    margin-top: 8px;
+    margin-bottom: 8px;
     font-family: Arial, sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .day-tooltip::before {
     content: '';
     position: absolute;
-    bottom: 100%;
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
     border: 6px solid transparent;
-    border-bottom-color: rgba(0, 0, 0, 0.9);
+    border-top-color: rgba(0, 0, 0, 0.95);
 }
 
 .calendar-day:hover .day-tooltip {
@@ -594,7 +600,7 @@ tr.highlight {
 }
 
 .calendar-day.intensity-high {
-    background: #DC2626;
+    background: linear-gradient(135deg, #DC2626, #EF4444);
 }
 
 .calendar-day.intensity-high .day-number {
@@ -602,7 +608,7 @@ tr.highlight {
 }
 
 .calendar-day.intensity-medium {
-    background: #F59E0B;
+    background: linear-gradient(135deg, #F59E0B, #FBBF24);
 }
 
 .calendar-day.intensity-medium .day-number {
@@ -610,7 +616,7 @@ tr.highlight {
 }
 
 .calendar-day.intensity-low {
-    background: #60A5FA;
+    background: linear-gradient(135deg, #10B981, #34D399);
 }
 
 .calendar-day.intensity-low .day-number {
@@ -705,13 +711,29 @@ tr.highlight {
     width: 24px;
     height: 24px;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--border-color);
+    border: 1px solid #D1D5DB;
 }
 
-.legend-label {
-    font-family: 'Cardo', serif;
+.legend-color.intensity-high {
+    background: linear-gradient(135deg, #DC2626, #EF4444);
+}
+
+.legend-color.intensity-medium {
+    background: linear-gradient(135deg, #F59E0B, #FBBF24);
+}
+
+.legend-color.intensity-low {
+    background: linear-gradient(135deg, #10B981, #34D399);
+}
+
+.legend-color.intensity-none {
+    background: #F3F4F6;
+}
+
+.legend-item span {
+    font-family: Arial, sans-serif;
     font-size: 0.875rem;
-    color: var(--text-secondary);
+    color: #374151;
 }
 
 /* Geography Section */

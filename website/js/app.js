@@ -268,14 +268,16 @@ function populateSocialMediaTable() {
 }
 
 // Enhanced Heat Map with Calendar Format
-function populateHeatMap() {
+let currentHeatMapYear = 2026;
+let currentHeatMapMonth = 0; // January
+
+function populateHeatMap(year = currentHeatMapYear, month = currentHeatMapMonth) {
     const container = document.getElementById('heatmapContainer');
     if (!container) return;
     
-    // Generate calendar for current month (January 2026)
-    const currentDate = new Date('2026-01-29');
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth(); // 0-indexed
+    // Update current values
+    currentHeatMapYear = year;
+    currentHeatMapMonth = month;
     
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
                         'July', 'August', 'September', 'October', 'November', 'December'];
@@ -286,25 +288,22 @@ function populateHeatMap() {
     const daysInMonth = lastDay.getDate();
     const startingDayOfWeek = firstDay.getDay(); // 0 = Sunday
     
-    // Create activity data map from weeklyData
-    const activityMap = {};
-    analyticsData.weeklyData.forEach(week => {
-        week.days.forEach(day => {
-            activityMap[day.date] = {
-                posts: day.posts,
-                campaigns: day.campaigns,
-                revenue: day.revenue
-            };
-        });
-    });
+    // Create activity data map - generate data for all months
+    const activityMap = generateMonthlyActivityData(year, month);
     
     // Build calendar HTML
     let calendarHtml = `
         <div class="heatmap-header-bar">
             <h3 style="margin: 0; font-family: Arial, sans-serif; font-size: 1.25rem;">${monthNames[month]} ${year}</h3>
-            <select id="monthSelector" class="month-selector">
-                ${monthNames.map((m, i) => `<option value="${i}" ${i === month ? 'selected' : ''}>${m} ${year}</option>`).join('')}
-            </select>
+            <div style="display: flex; gap: 1rem;">
+                <select id="monthSelector" class="month-selector">
+                    ${monthNames.map((m, i) => `<option value="${i}" ${i === month ? 'selected' : ''}>${m}</option>`).join('')}
+                </select>
+                <select id="yearSelector" class="month-selector">
+                    <option value="2025" ${year === 2025 ? 'selected' : ''}>2025</option>
+                    <option value="2026" ${year === 2026 ? 'selected' : ''}>2026</option>
+                </select>
+            </div>
         </div>
         <div class="calendar-grid">
             <div class="calendar-day-header">Sun</div>
@@ -332,9 +331,9 @@ function populateHeatMap() {
                  data-date="${dateStr}">
                 <span class="day-number">${day}</span>
                 <div class="day-tooltip">
-                    <strong>${monthNames[month]} ${day}</strong><br>
-                    ${activity.posts} posts, ${activity.campaigns} campaigns<br>
-                    $${activity.revenue.toLocaleString()} revenue
+                    <strong>${monthNames[month]} ${day}, ${year}</strong><br>
+                    ${activity.posts} posts · ${activity.campaigns} campaigns<br>
+                    Revenue: $${activity.revenue.toLocaleString()}
                 </div>
             </div>
         `;
@@ -363,6 +362,47 @@ function populateHeatMap() {
     `;
     
     container.innerHTML = calendarHtml;
+    
+    // Add event listeners for selectors
+    const monthSelector = document.getElementById('monthSelector');
+    const yearSelector = document.getElementById('yearSelector');
+    
+    if (monthSelector) {
+        monthSelector.addEventListener('change', function() {
+            populateHeatMap(currentHeatMapYear, parseInt(this.value));
+        });
+    }
+    
+    if (yearSelector) {
+        yearSelector.addEventListener('change', function() {
+            populateHeatMap(parseInt(this.value), currentHeatMapMonth);
+        });
+    }
+}
+
+// Generate activity data for any month
+function generateMonthlyActivityData(year, month) {
+    const activityMap = {};
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    // Generate random but consistent activity for each day
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        
+        // Use date-based seed for consistency
+        const seed = year * 10000 + month * 100 + day;
+        const random1 = Math.abs(Math.sin(seed * 12.9898)) * 43758.5453;
+        const random2 = Math.abs(Math.sin(seed * 78.233)) * 43758.5453;
+        const random3 = Math.abs(Math.sin(seed * 45.164)) * 43758.5453;
+        
+        activityMap[dateStr] = {
+            posts: Math.floor((random1 % 1) * 4), // 0-3 posts
+            campaigns: Math.floor((random2 % 1) * 3), // 0-2 campaigns
+            revenue: Math.floor((random3 % 1) * 8000) + 500 // $500-$8500
+        };
+    }
+    
+    return activityMap;
 }
 
 function getIntensityLevel(posts, campaigns, revenue) {
