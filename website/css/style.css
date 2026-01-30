@@ -133,10 +133,10 @@ table {
 }
 
 .date-range {
-    font-family: 'Cardo', serif;
+    font-family: Arial, sans-serif;
     font-size: 0.875rem;
-    color: var(--brand-mocha);
-    background: rgba(246, 225, 203, 0.1);
+    color: #F3F4F6 !important;
+    background: transparent;
     padding: 0.5rem 1rem;
     border-radius: var(--radius-md);
 }
@@ -371,12 +371,14 @@ table {
     padding: var(--spacing-md);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     position: relative;
-    min-height: 350px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
 .chart-container canvas {
-    height: 300px !important;
-    width: 100% !important;
+    max-height: 350px !important;
+    display: block !important;
 }
 
 .chart-container.full-width {

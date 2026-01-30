@@ -105,6 +105,38 @@ const analyticsData = {
             engagement: 7020,
             revenueImpact: 6800.00,
             trafficImpact: 1850
+        },
+        {
+            date: "2026-01-26",
+            platform: "Facebook",
+            influencer: "@modernmangal",
+            postUrl: "https://facebook.com/modernmangal/posts/123",
+            views: 32000,
+            reach: 28500,
+            impressions: 35200,
+            likes: 1250,
+            comments: 89,
+            shares: 145,
+            saves: 0,
+            engagement: 1484,
+            revenueImpact: 2800.00,
+            trafficImpact: 680
+        },
+        {
+            date: "2026-01-21",
+            platform: "Facebook",
+            influencer: "@jewelrylover",
+            postUrl: "https://facebook.com/jewelrylover/posts/456",
+            views: 18500,
+            reach: 16200,
+            impressions: 21300,
+            likes: 720,
+            comments: 45,
+            shares: 82,
+            saves: 0,
+            engagement: 847,
+            revenueImpact: 1650.00,
+            trafficImpact: 420
         }
     ],
     
