@@ -237,11 +237,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Tab Content Sections */
 .tab-content {
-    display: none;
+    display: none !important;
 }
 
 .tab-content.active {
-    display: block;
+    display: block !important;
     animation: fadeIn 0.3s ease;
 }
 
