@@ -739,6 +739,146 @@ tr.highlight {
     color: #374151;
 }
 
+/* Quarter View */
+.quarter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.mini-month {
+    background: #FAFAFA;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.mini-month-header {
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+.mini-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.mini-day-header {
+    font-family: Arial, sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-align: center;
+    color: #6B7280;
+    padding: 0.15rem;
+}
+
+.mini-day {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    min-height: 20px;
+}
+
+.mini-day:not(.empty):hover {
+    transform: scale(1.15);
+    z-index: 10;
+}
+
+.mini-day.empty {
+    background: transparent;
+}
+
+/* Year View */
+.year-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tiny-month {
+    background: #FAFAFA;
+    border-radius: 6px;
+    padding: 0.75rem;
+}
+
+.tiny-month-header {
+    font-family: Arial, sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-align: center;
+    margin-bottom: 0.4rem;
+    color: #374151;
+}
+
+.tiny-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+}
+
+.tiny-day {
+    aspect-ratio: 1;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    min-height: 12px;
+    max-height: 18px;
+}
+
+.tiny-day:not(.empty):hover {
+    transform: scale(1.2);
+    z-index: 10;
+}
+
+.tiny-day.empty {
+    background: transparent;
+}
+
+/* Apply intensity colors to mini and tiny days */
+.mini-day.intensity-high,
+.tiny-day.intensity-high {
+    background: linear-gradient(135deg, #DC2626, #EF4444);
+}
+
+.mini-day.intensity-medium,
+.tiny-day.intensity-medium {
+    background: linear-gradient(135deg, #F59E0B, #FBBF24);
+}
+
+.mini-day.intensity-low,
+.tiny-day.intensity-low {
+    background: linear-gradient(135deg, #10B981, #34D399);
+}
+
+.mini-day.intensity-none,
+.tiny-day.intensity-none {
+    background: #E5E7EB;
+}
+
+/* Responsive adjustments for quarter and year views */
+@media (max-width: 1024px) {
+    .year-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .quarter-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .year-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 /* Geography Section */
 .geo-container {
     display: grid;

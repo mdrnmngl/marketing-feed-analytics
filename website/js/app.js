@@ -269,36 +269,49 @@ function populateSocialMediaTable() {
 
 // Enhanced Heat Map with Calendar Format
 let currentHeatMapYear = 2026;
-let currentHeatMapMonth = 0; // January
+let currentHeatMapMonth = 0; // January  
+let currentHeatMapView = 'month'; // 'month', 'quarter', 'year'
 
-function populateHeatMap(year = currentHeatMapYear, month = currentHeatMapMonth) {
+function populateHeatMap(year = currentHeatMapYear, month = currentHeatMapMonth, view = currentHeatMapView) {
     const container = document.getElementById('heatmapContainer');
     if (!container) return;
     
     // Update current values
     currentHeatMapYear = year;
     currentHeatMapMonth = month;
+    currentHeatMapView = view;
     
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
                         'July', 'August', 'September', 'October', 'November', 'December'];
     
-    // Get first day of month and number of days
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay(); // 0 = Sunday
-    
-    // Create activity data map - generate data for all months
-    const activityMap = generateMonthlyActivityData(year, month);
+    // Build header with view title
+    const viewTitle = view === 'month' ? `${monthNames[month]} ${year}` :
+                      view === 'quarter' ? `Q${Math.floor(month / 3) + 1} ${year}` :
+                      `${year} Overview`;
     
     // Build calendar HTML
     let calendarHtml = `
         <div class="heatmap-header-bar">
-            <h3 style="margin: 0; font-family: Arial, sans-serif; font-size: 1.25rem;">${monthNames[month]} ${year}</h3>
-            <div style="display: flex; gap: 1rem;">
-                <select id="monthSelector" class="month-selector">
-                    ${monthNames.map((m, i) => `<option value="${i}" ${i === month ? 'selected' : ''}>${m}</option>`).join('')}
+            <h3 style="margin: 0; font-family: Arial, sans-serif; font-size: 1.25rem;">${viewTitle}</h3>
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+                <select id="viewSelector" class="month-selector">
+                    <option value="month" ${view === 'month' ? 'selected' : ''}>Month</option>
+                    <option value="quarter" ${view === 'quarter' ? 'selected' : ''}>Quarter</option>
+                    <option value="year" ${view === 'year' ? 'selected' : ''}>Year</option>
                 </select>
+                ${view === 'month' ? `
+                    <select id="monthSelector" class="month-selector">
+                        ${monthNames.map((m, i) => `<option value="${i}" ${i === month ? 'selected' : ''}>${m}</option>`).join('')}
+                    </select>
+                ` : ''}
+                ${view === 'quarter' ? `
+                    <select id="quarterSelector" class="month-selector">
+                        <option value="0" ${month < 3 ? 'selected' : ''}>Q1</option>
+                        <option value="1" ${month >= 3 && month < 6 ? 'selected' : ''}>Q2</option>
+                        <option value="2" ${month >= 6 && month < 9 ? 'selected' : ''}>Q3</option>
+                        <option value="3" ${month >= 9 ? 'selected' : ''}>Q4</option>
+                    </select>
+                ` : ''}
                 <select id="yearSelector" class="month-selector">
                     <option value="2024" ${year === 2024 ? 'selected' : ''}>2024</option>
                     <option value="2025" ${year === 2025 ? 'selected' : ''}>2025</option>
@@ -306,43 +319,19 @@ function populateHeatMap(year = currentHeatMapYear, month = currentHeatMapMonth)
                 </select>
             </div>
         </div>
-        <div class="calendar-grid">
-            <div class="calendar-day-header">Sun</div>
-            <div class="calendar-day-header">Mon</div>
-            <div class="calendar-day-header">Tue</div>
-            <div class="calendar-day-header">Wed</div>
-            <div class="calendar-day-header">Thu</div>
-            <div class="calendar-day-header">Fri</div>
-            <div class="calendar-day-header">Sat</div>
     `;
     
-    // Add empty cells for days before month starts
-    for (let i = 0; i < startingDayOfWeek; i++) {
-        calendarHtml += '<div class="calendar-day empty"></div>';
+    // Generate view content
+    if (view === 'month') {
+        calendarHtml += generateMonthView(year, month);
+    } else if (view === 'quarter') {
+        calendarHtml += generateQuarterView(year, month);
+    } else {
+        calendarHtml += generateYearView(year);
     }
     
-    // Add days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const activity = activityMap[dateStr] || { posts: 0, campaigns: 0, revenue: 0 };
-        const intensity = getIntensityLevel(activity.posts, activity.campaigns, activity.revenue);
-        
-        calendarHtml += `
-            <div class="calendar-day intensity-${intensity}" 
-                 data-date="${dateStr}">
-                <span class="day-number">${day}</span>
-                <div class="day-tooltip">
-                    <strong>${monthNames[month]} ${day}, ${year}</strong><br>
-                    ${activity.posts} posts · ${activity.campaigns} campaigns<br>
-                    Revenue: $${activity.revenue.toLocaleString()}
-                </div>
-            </div>
-        `;
-    }
-    
-    calendarHtml += `
-        </div>
-        <div class="heatmap-legend">
+    // Add legend
+    calendarHtml += `<div class="heatmap-legend">
             <div class="legend-item">
                 <div class="legend-color intensity-high"></div>
                 <span>High Activity</span>
@@ -359,26 +348,154 @@ function populateHeatMap(year = currentHeatMapYear, month = currentHeatMapMonth)
                 <div class="legend-color intensity-none"></div>
                 <span>No Activity</span>
             </div>
-        </div>
-    `;
+        </div>`;
     
     container.innerHTML = calendarHtml;
     
-    // Add event listeners for selectors
+    // Add event listeners
+    const viewSelector = document.getElementById('viewSelector');
     const monthSelector = document.getElementById('monthSelector');
+    const quarterSelector = document.getElementById('quarterSelector');
     const yearSelector = document.getElementById('yearSelector');
     
+    if (viewSelector) {
+        viewSelector.addEventListener('change', function() {
+            populateHeatMap(currentHeatMapYear, currentHeatMapMonth, this.value);
+        });
+    }
     if (monthSelector) {
         monthSelector.addEventListener('change', function() {
-            populateHeatMap(currentHeatMapYear, parseInt(this.value));
+            populateHeatMap(currentHeatMapYear, parseInt(this.value), currentHeatMapView);
         });
     }
-    
+    if (quarterSelector) {
+        quarterSelector.addEventListener('change', function() {
+            const quarterMonth = parseInt(this.value) * 3;
+            populateHeatMap(currentHeatMapYear, quarterMonth, currentHeatMapView);
+        });
+    }
     if (yearSelector) {
         yearSelector.addEventListener('change', function() {
-            populateHeatMap(parseInt(this.value), currentHeatMapMonth);
+            populateHeatMap(parseInt(this.value), currentHeatMapMonth, currentHeatMapView);
         });
     }
+}
+
+function generateMonthView(year, month) {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                        'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    const firstDay = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    
+    const activityMap = generateMonthlyActivityData(year, month);
+    
+    let html = `
+        <div class="calendar-grid">
+            <div class="calendar-day-header">Sun</div>
+            <div class="calendar-day-header">Mon</div>
+            <div class="calendar-day-header">Tue</div>
+            <div class="calendar-day-header">Wed</div>
+            <div class="calendar-day-header">Thu</div>
+            <div class="calendar-day-header">Fri</div>
+            <div class="calendar-day-header">Sat</div>
+    `;
+    
+    for (let i = 0; i < startingDayOfWeek; i++) {
+        html += '<div class="calendar-day empty"></div>';
+    }
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const activity = activityMap[dateStr] || { posts: 0, campaigns: 0, revenue: 0 };
+        const intensity = getIntensityLevel(activity.posts, activity.campaigns, activity.revenue);
+        
+        html += `
+            <div class="calendar-day intensity-${intensity}" data-date="${dateStr}">
+                <span class="day-number">${day}</span>
+                <div class="day-tooltip">
+                    <strong>${monthNames[month]} ${day}, ${year}</strong><br>
+                    ${activity.posts} posts · ${activity.campaigns} campaigns<br>
+                    Revenue: $${activity.revenue.toLocaleString()}
+                </div>
+            </div>
+        `;
+    }
+    
+    html += '</div>';
+    return html;
+}
+
+function generateQuarterView(year, month) {
+    const quarterStart = Math.floor(month / 3) * 3;
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    let html = '<div class="quarter-grid">';
+    
+    for (let m = quarterStart; m < quarterStart + 3; m++) {
+        const activityMap = generateMonthlyActivityData(year, m);
+        const firstDay = new Date(year, m, 1);
+        const daysInMonth = new Date(year, m + 1, 0).getDate();
+        const startingDayOfWeek = firstDay.getDay();
+        
+        html += `
+            <div class="mini-month">
+                <div class="mini-month-header">${monthNames[m]}</div>
+                <div class="mini-calendar-grid">
+                    <div class="mini-day-header">S</div><div class="mini-day-header">M</div><div class="mini-day-header">T</div><div class="mini-day-header">W</div><div class="mini-day-header">T</div><div class="mini-day-header">F</div><div class="mini-day-header">S</div>
+        `;
+        
+        for (let i = 0; i < startingDayOfWeek; i++) {
+            html += '<div class="mini-day empty"></div>';
+        }
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateStr = `${year}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const activity = activityMap[dateStr] || { posts: 0, campaigns: 0, revenue: 0 };
+            const intensity = getIntensityLevel(activity.posts, activity.campaigns, activity.revenue);
+            
+            html += `<div class="mini-day intensity-${intensity}" title="${monthNames[m]} ${day}: ${activity.posts} posts, ${activity.campaigns} campaigns, $${activity.revenue.toLocaleString()}"></div>`;
+        }
+        
+        html += '</div></div>';
+    }
+    
+    html += '</div>';
+    return html;
+}
+
+function generateYearView(year) {
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    let html = '<div class="year-grid">';
+    
+    for (let m = 0; m < 12; m++) {
+        const activityMap = generateMonthlyActivityData(year, m);
+        const firstDay = new Date(year, m, 1);
+        const daysInMonth = new Date(year, m + 1, 0).getDate();
+        const startingDayOfWeek = firstDay.getDay();
+        
+        html += `<div class="tiny-month"><div class="tiny-month-header">${monthNames[m]}</div><div class="tiny-calendar-grid">`;
+        
+        for (let i = 0; i < startingDayOfWeek; i++) {
+            html += '<div class="tiny-day empty"></div>';
+        }
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateStr = `${year}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const activity = activityMap[dateStr] || { posts: 0, campaigns: 0, revenue: 0 };
+            const intensity = getIntensityLevel(activity.posts, activity.campaigns, activity.revenue);
+            
+            html += `<div class="tiny-day intensity-${intensity}" title="${monthNames[m]} ${day}: ${activity.posts} posts, ${activity.campaigns} campaigns, $${activity.revenue.toLocaleString()}"></div>`;
+        }
+        
+        html += '</div></div>';
+    }
+    
+    html += '</div>';
+    return html;
+}
 }
 
 // Generate activity data for any month
