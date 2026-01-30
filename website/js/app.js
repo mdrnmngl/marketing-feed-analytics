@@ -169,8 +169,7 @@ function setupDateFilters() {
                 
                 currentDateRange = diffDays;
                 populateRawDataTable();
-                
-                if (customRangeDiv) customRangeDiv.style.display = 'none';
+                // Keep custom range visible
             } else {
                 alert('Please select both start and end dates');
             }
@@ -277,36 +276,25 @@ function populateHeatMap() {
     
     const { weeklyData } = analyticsData;
     
-    // Create heat map structure
+    // Create simple heat map grid
     const heatmapHtml = `
-        <div style="margin-bottom: 2rem;">
-            <h3 style="font-family: 'Cardo', serif; color: var(--brand-black-blue); margin-bottom: 1rem;">Weekly Marketing Activity Intensity</h3>
-            <p style="font-family: 'Cardo', serif; font-style: italic; color: var(--text-secondary); margin-bottom: 1.5rem;">
-                Color intensity represents combined marketing activity (posts + campaigns) and performance metrics
-            </p>
-        </div>
-        
         <div class="heatmap-grid">
-            <div></div>
-            <div class="heatmap-header">Mon</div>
-            <div class="heatmap-header">Tue</div>
-            <div class="heatmap-header">Wed</div>
-            <div class="heatmap-header">Thu</div>
-            <div class="heatmap-header">Fri</div>
-            <div class="heatmap-header">Sat</div>
-            <div class="heatmap-header">Sun</div>
+            <div class="heatmap-cell heatmap-header"></div>
+            <div class="heatmap-cell heatmap-header">Mon</div>
+            <div class="heatmap-cell heatmap-header">Tue</div>
+            <div class="heatmap-cell heatmap-header">Wed</div>
+            <div class="heatmap-cell heatmap-header">Thu</div>
+            <div class="heatmap-cell heatmap-header">Fri</div>
+            <div class="heatmap-cell heatmap-header">Sat</div>
+            <div class="heatmap-cell heatmap-header">Sun</div>
             
             ${weeklyData.map((week, weekIdx) => `
-                <div class="heatmap-week-label">Week ${weekIdx + 1}</div>
-                ${week.days.map(day => {
+                <div class="heatmap-cell heatmap-week-label">Week ${weekIdx + 1}</div>
+                ${week.days.map((day, dayIdx) => {
                     const intensity = getIntensityLevel(day.posts, day.campaigns, day.revenue);
-                    return `
-                        <div class="heatmap-cell intensity-${intensity}" title="${day.date}: ${day.posts} posts, ${day.campaigns} campaigns, $${day.revenue.toLocaleString()}">
-                            <div class="heatmap-date">${day.date.split('-')[2]}</div>
-                            <div class="heatmap-value">${day.posts + day.campaigns}</div>
-                            <div class="heatmap-label">${intensity.toUpperCase()}</div>
-                        </div>
-                    `;
+                    return `<div class="heatmap-cell heatmap-day intensity-${intensity}" 
+                             title="${day.date}: ${day.posts} posts, ${day.campaigns} campaigns, $${day.revenue.toLocaleString()}">
+                        </div>`;
                 }).join('')}
             `).join('')}
         </div>
@@ -314,19 +302,19 @@ function populateHeatMap() {
         <div class="heatmap-legend">
             <div class="legend-item">
                 <div class="legend-color intensity-high"></div>
-                <span class="legend-label">High Activity (3+ events, high revenue)</span>
+                <span>High Activity</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color intensity-medium"></div>
-                <span class="legend-label">Medium Activity (1-2 events)</span>
+                <span>Medium Activity</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color intensity-low"></div>
-                <span class="legend-label">Low Activity (events but low impact)</span>
+                <span>Low Activity</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color intensity-none"></div>
-                <span class="legend-label">No Activity</span>
+                <span>No Activity</span>
             </div>
         </div>
     `;
@@ -378,10 +366,10 @@ function initializeMap() {
         
         // Create popup content
         const popupContent = `
-            <div style="font-family: 'Cardo', serif; min-width: 150px;">
-                <h4 style="margin: 0 0 0.5rem 0; color: var(--brand-black-blue); font-size: 1.1rem;">${country.name}</h4>
-                <p style="margin: 0.25rem 0; color: var(--brand-mocha);"><strong>Sessions:</strong> ${country.sessions.toLocaleString()}</p>
-                <p style="margin: 0.25rem 0; color: var(--brand-mocha);"><strong>Revenue:</strong> $${country.revenue.toLocaleString()}</p>
+            <div style="font-family: Arial, sans-serif; min-width: 150px;">
+                <h4 style="margin: 0 0 0.5rem 0; color: var(--brand-black-blue); font-size: 1.1rem;">${country.flag} ${country.name}</h4>
+                <p style="margin: 0.25rem 0; color: #6B7280;"><strong>Sessions:</strong> ${country.sessions.toLocaleString()}</p>
+                <p style="margin: 0.25rem 0; color: #6B7280;"><strong>Revenue:</strong> $${country.revenue.toLocaleString()}</p>
             </div>
         `;
         
@@ -422,8 +410,8 @@ function populateCountryList() {
         const item = document.createElement('div');
         item.className = 'country-item';
         item.innerHTML = `
-            <span class="country-name">${index + 1}. ${country.name}</span>
-            <span class="country-sessions">${country.sessions.toLocaleString()} sessions</span>
+            <span class="country-name">${country.flag} ${country.name}</span>
+            <span class="country-sessions">${country.sessions.toLocaleString()}</span>
         `;
         listElement.appendChild(item);
     });

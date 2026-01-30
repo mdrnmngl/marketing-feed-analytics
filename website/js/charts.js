@@ -123,10 +123,11 @@ function createPlatformChart() {
     });
     
     charts.platform = new Chart(ctx, {
-        type: 'doughnut',
+        type: 'bar',
         data: {
             labels: Object.keys(platformCounts),
             datasets: [{
+                label: 'Posts by Platform',
                 data: Object.values(platformCounts),
                 backgroundColor: [
                     '#E1306C', // Instagram pink
@@ -142,10 +143,10 @@ function createPlatformChart() {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            indexAxis: 'y',
             plugins: {
                 legend: {
-                    position: 'bottom',
-                    labels: { padding: 15, font: { size: 12 } }
+                    display: false
                 },
                 tooltip: {
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -153,12 +154,16 @@ function createPlatformChart() {
                     callbacks: {
                         label: function(context) {
                             const label = context.label || '';
-                            const value = context.parsed || 0;
-                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                            const percentage = ((value / total) * 100).toFixed(1);
-                            return `${label}: ${value} posts (${percentage}%)`;
+                            const value = context.parsed.x || 0;
+                            return `${label}: ${value} posts`;
                         }
                     }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
                 }
             }
         }
@@ -240,18 +245,19 @@ function createActivityChart() {
     });
 }
 
-// Traffic Source Pie Chart
+// Traffic Source Bar Chart
 function createTrafficSourceChart() {
     const ctx = document.getElementById('trafficSourceChart');
     if (!ctx) return;
     
     charts.trafficSource = new Chart(ctx, {
-        type: 'pie',
+        type: 'bar',
         data: {
             labels: Object.keys(analyticsData.trafficSources).map(s => 
                 s.charAt(0).toUpperCase() + s.slice(1)
             ),
             datasets: [{
+                label: 'Sessions',
                 data: Object.values(analyticsData.trafficSources),
                 backgroundColor: [
                     '#E1306C', // Instagram
@@ -269,10 +275,10 @@ function createTrafficSourceChart() {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            indexAxis: 'y',
             plugins: {
                 legend: {
-                    position: 'right',
-                    labels: { padding: 10, font: { size: 12 } }
+                    display: false
                 },
                 tooltip: {
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -280,9 +286,20 @@ function createTrafficSourceChart() {
                     callbacks: {
                         label: function(context) {
                             const label = context.label || '';
-                            const value = context.parsed || 0;
-                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                            const percentage = ((value / total) * 100).toFixed(1);
+                            const value = context.parsed.x || 0;
+                            return `${label}: ${value.toLocaleString()} sessions`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
                             return `${label}: ${value.toLocaleString()} (${percentage}%)`;
                         }
                     }

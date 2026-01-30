@@ -1,8 +1,6 @@
 /* Modern Mangal - Marketing Analytics Dashboard */
 /* Brand Identity Implementation */
 
-@import url('https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,300;0,400;0,700;1,400&display=swap');
-
 * {
     margin: 0;
     padding: 0;
@@ -62,9 +60,9 @@
 }
 
 body {
-    font-family: 'Cardo', serif;
+    font-family: Arial, sans-serif;
     font-size: 1rem;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.6;
     color: var(--text-primary);
     background-color: var(--bg-primary);
@@ -72,20 +70,20 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cardo', serif;
-    font-weight: 400;
+    font-family: Arial, sans-serif;
+    font-weight: 600;
     color: var(--brand-black-blue);
     line-height: 1.3;
 }
 
 button, input, select, textarea {
-    font-family: 'Cardo', serif;
-    font-weight: 300;
+    font-family: Arial, sans-serif;
+    font-weight: 400;
 }
 
 table {
-    font-family: 'Cardo', serif;
-    font-weight: 300;
+    font-family: Arial, sans-serif;
+    font-weight: 400;
 }
 
 .container {
@@ -173,9 +171,9 @@ table {
     background: none;
     border: none;
     padding: 1rem 1.5rem;
-    font-family: 'Cardo', serif;
+    font-family: Arial, sans-serif;
     font-size: 0.875rem;
-    font-weight: 400;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--brand-mocha);
@@ -211,11 +209,11 @@ table {
     left: 0;
     background: var(--brand-white-chalk);
     border: 1px solid var(--border-color);
-    border-top: none;
     box-shadow: var(--shadow-lg);
     display: none;
     min-width: 200px;
-    z-index: 101;
+    z-index: 1000;
+    max-height: none;
 }
 
 .dropdown-menu.show {
@@ -226,9 +224,9 @@ table {
     display: block;
     width: 100%;
     padding: 0.75rem 1.5rem;
-    font-family: 'Cardo', serif;
+    font-family: Arial, sans-serif;
     font-size: 0.875rem;
-    font-weight: 300;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--brand-mocha);
@@ -374,9 +372,14 @@ table {
 }
 
 .chart-container canvas {
-    position: relative;
-    height: 300px !important;
+    max-height: 300px;
     width: 100% !important;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 300px;
+    width: 100%;
 }
 
 .chart-container.full-width {
@@ -384,9 +387,9 @@ table {
 }
 
 .chart-title {
-    font-family: 'Cardo', serif;
+    font-family: Arial, sans-serif;
     font-size: 1.125rem;
-    font-weight: 400;
+    font-weight: 600;
     margin-bottom: var(--spacing-md);
     color: #111827;
     padding-bottom: var(--spacing-sm);
@@ -493,77 +496,58 @@ tr.highlight {
 
 .heatmap-grid {
     display: grid;
-    grid-template-columns: auto repeat(7, 1fr);
+    grid-template-columns: 60px repeat(7, 1fr);
     gap: 4px;
-    margin-top: var(--spacing-md);
+    margin: 2rem 0;
 }
 
-.heatmap-header,
+.heatmap-header {
+    font-family: Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    text-align: center;
+}
+
 .heatmap-week-label {
     font-family: Arial, sans-serif;
     font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-secondary);
-    padding: var(--spacing-xs);
-    text-align: center;
     font-weight: 600;
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
 }
 
-.heatmap-cell {
-    aspect-ratio: 1;
-    border-radius: var(--radius-sm);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.heatmap-cell.heatmap-day {
+    min-height: 50px;
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s ease;
-    border: 1px solid var(--border-color);
-    padding: 0.5rem;
-    min-width: 80px;
 }
 
-.heatmap-cell:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-md);
+.heatmap-cell.heatmap-day:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     z-index: 10;
 }
 
 .heatmap-cell.intensity-high {
-    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-    color: white;
-    border-color: #059669;
+    background: #DC2626;
 }
 
 .heatmap-cell.intensity-medium {
-    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-    color: white;
-    border-color: #D97706;
+    background: #F59E0B;
 }
 
 .heatmap-cell.intensity-low {
-    background: linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%);
-    color: var(--text-secondary);
-    border-color: #D1D5DB;
+    background: #60A5FA;
 }
 
 .heatmap-cell.intensity-none {
-    background: var(--brand-white-chalk);
-    color: var(--text-light);
-    border-color: var(--border-color);
-}
-
-.heatmap-date {
-    font-family: 'Cardo', serif;
-    font-size: 0.75rem;
-    margin-bottom: 0.25rem;
-}
-
-.heatmap-value {
-    font-family: 'Cardo', serif;
-    font-weight: 700;
-    font-size: 0.875rem;
+    background: #E5E7EB;
 }
 
 .heatmap-label {
@@ -602,27 +586,67 @@ tr.highlight {
     color: var(--text-secondary);
 }
 
-/* Map */
+/* Geography Section */
+.geo-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
 #map {
     height: 500px;
     border-radius: var(--radius-md);
     border: 2px solid var(--border-color);
 }
 
+.geo-stats {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.geo-stats h3 {
+    font-family: Arial, sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #E5E7EB;
+}
+
 .country-list {
-    margin-top: var(--spacing-md);
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .country-item {
     display: flex;
     justify-content: space-between;
-    padding: var(--spacing-sm);
-    background: var(--brand-rose);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-color);
+    align-items: center;
+    padding: 0.75rem;
+    background: #F9FAFB;
+    border-radius: 6px;
+    border: 1px solid #E5E7EB;
+    transition: all 0.2s ease;
+}
+
+.country-item:hover {
+    background: #F3F4F6;
+    border-color: var(--brand-mocha);
+}
+
+.country-name {
+    font-weight: 500;
+    color: #111827;
+}
+
+.country-sessions {
+    font-size: 0.875rem;
+    color: #6B7280;
+    font-weight: 600;
 }
 
 .country-name {
@@ -687,7 +711,7 @@ tr.highlight {
     border: 1px solid #D1D5DB;
     border-radius: 4px;
     font-size: 0.875rem;
-    font-family: 'Cardo', serif;
+    font-family: Arial, sans-serif;
     color: #374151;
 }
 
@@ -704,8 +728,8 @@ tr.highlight {
     border: none;
     border-radius: 4px;
     font-size: 0.875rem;
-    font-family: 'Cardo', serif;
-    font-weight: 400;
+    font-family: Arial, sans-serif;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -731,12 +755,12 @@ tr.highlight {
 }
 
 .filter-label {
-    font-family: 'Cardo', serif;
+    font-family: Arial, sans-serif;
     font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-secondary);
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .filter-buttons {
