@@ -371,14 +371,11 @@ table {
     padding: var(--spacing-md);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     position: relative;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
 }
 
 .chart-container canvas {
-    max-height: 350px !important;
     display: block !important;
+    width: 100% !important;
 }
 
 .chart-container.full-width {
@@ -400,9 +397,11 @@ table {
     background: #FFFFFF;
     border: 1px solid #E5E7EB;
     border-radius: var(--radius-lg);
-    padding: var(--spacing-md);
+    padding: 1rem;
     overflow-x: auto;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    margin: 0 -1rem;
+    width: calc(100% + 2rem);
 }
 
 .table-container h3 {
