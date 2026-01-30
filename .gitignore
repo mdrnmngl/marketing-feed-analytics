@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+venv/
+ENV/
+env/
+
+# Credentials (NEVER commit these!)
+*.env
+*credentials*.json
+*credentials*.env
+secrets/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Generated data (Excel is OK to commit, but large files excluded)
+*.xlsx
+!data/Marketing_Analytics_Feed.xlsx
+
+# Backup files
+*.backup
+*.bak
+*.tmp
+
+# Logs
+*.log
+logs/
+
+# OS
+Thumbs.db

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Mangal - Marketing Analytics Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Leaflet for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">Modern Mangal</h1>
+                <p class="subtitle">Marketing Analytics Dashboard</p>
+            </div>
+            <div class="date-range" id="dateRange">Loading...</div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <div class="container">
+            <button class="tab-btn active" data-tab="dashboard">
+                <span class="icon">📊</span> Dashboard
+            </button>
+            <button class="tab-btn" data-tab="social">
+                <span class="icon">📱</span> Social Media
+            </button>
+            <button class="tab-btn" data-tab="heatmap">
+                <span class="icon">🔥</span> Heat Map
+            </button>
+            <button class="tab-btn" data-tab="geography">
+                <span class="icon">🌍</span> Geography
+            </button>
+            <button class="tab-btn" data-tab="traffic">
+                <span class="icon">🚀</span> Traffic Sources
+            </button>
+            <button class="tab-btn" data-tab="data">
+                <span class="icon">📋</span> Raw Data
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Dashboard Tab -->
+            <section id="dashboard" class="tab-content active">
+                <h2 class="section-title">Overview</h2>
+                
+                <!-- Summary Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #E3F2FD;">💰</div>
+                        <div class="stat-content">
+                            <p class="stat-label">Total Revenue</p>
+                            <h3 class="stat-value" id="totalRevenue">$0</h3>
+                            <p class="stat-change positive" id="revenueChange">+0%</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #F3E5F5;">🛒</div>
+                        <div class="stat-content">
+                            <p class="stat-label">Total Orders</p>
+                            <h3 class="stat-value" id="totalOrders">0</h3>
+                            <p class="stat-change positive" id="ordersChange">+0%</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #E8F5E9;">👥</div>
+                        <div class="stat-content">
+                            <p class="stat-label">Total Visitors</p>
+                            <h3 class="stat-value" id="totalVisitors">0</h3>
+                            <p class="stat-change positive" id="visitorsChange">+0%</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #FFF3E0;">📸</div>
+                        <div class="stat-content">
+                            <p class="stat-label">Social Posts</p>
+                            <h3 class="stat-value" id="totalPosts">0</h3>
+                            <p class="stat-change neutral" id="postsChange">Last 30 days</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Revenue & Traffic Trend</h3>
+                        <canvas id="revenueTrafficChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 class="chart-title">Platform Distribution</h3>
+                        <canvas id="platformChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Marketing Activity Timeline -->
+                <div class="chart-container full-width">
+                    <h3 class="chart-title">Marketing Activity Impact</h3>
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Social Media Tab -->
+            <section id="social" class="tab-content">
+                <h2 class="section-title">Social Media Performance</h2>
+                <div class="table-container">
+                    <table class="data-table" id="socialTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Platform</th>
+                                <th>Influencer</th>
+                                <th>Views</th>
+                                <th>Reach</th>
+                                <th>Engagement</th>
+                                <th>7-Day Revenue Impact</th>
+                                <th>7-Day Traffic Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody id="socialTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Heat Map Tab -->
+            <section id="heatmap" class="tab-content">
+                <h2 class="section-title">Marketing Activity Heat Map</h2>
+                <p class="section-description">Weekly view of marketing activities and performance</p>
+                <div id="heatmapContainer" class="heatmap-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
+
+            <!-- Geography Tab -->
+            <section id="geography" class="tab-content">
+                <h2 class="section-title">Geographic Traffic Distribution</h2>
+                <div class="geo-container">
+                    <div id="map" style="height: 500px; border-radius: 12px;"></div>
+                    <div class="geo-stats">
+                        <h3>Top Countries</h3>
+                        <div id="countryList" class="country-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Traffic Sources Tab -->
+            <section id="traffic" class="tab-content">
+                <h2 class="section-title">Traffic Sources Breakdown</h2>
+                <div class="charts-row">
+                    <div class="chart-container">
+                        <h3 class="chart-title">Traffic by Source</h3>
+                        <canvas id="trafficSourceChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 class="chart-title">Source Trends Over Time</h3>
+                        <canvas id="trafficTrendChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Raw Data Tab -->
+            <section id="data" class="tab-content">
+                <h2 class="section-title">Raw Data</h2>
+                <div class="table-container">
+                    <table class="data-table" id="rawDataTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Revenue</th>
+                                <th>Orders</th>
+                                <th>Sessions</th>
+                                <th>Visitors</th>
+                                <th>Influencer Posts</th>
+                                <th>Campaigns</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rawDataTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Modern Mangal. Marketing Analytics Dashboard</p>
+            <p class="footer-update">Last Updated: <span id="lastUpdate">Loading...</span></p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
