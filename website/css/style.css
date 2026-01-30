@@ -540,17 +540,16 @@ tr.highlight {
 }
 
 .calendar-day {
-    aspect-ratio: 1.4 / 1;
     border-radius: 6px;
-    padding: 0.25rem;
+    padding: 0.5rem 0.25rem;
     position: relative;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    min-height: 35px;
-    max-height: 50px;
+    min-height: 50px;
+    height: 60px;
 }
 
 .calendar-day.empty {
